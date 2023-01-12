@@ -1,5 +1,5 @@
 resource "azurerm_policy_definition" "main" {
-  for_each            = var.policy_json
+  for_each            = { for policy in fileset("${path.module}/policies", "*.json") : policy => jsondecode(file("${path.module}/policies/${policy}")) }
   name                = split(".", each.key)[0]
   display_name        = try(each.value.display_name, "Custom Policy")
   policy_type         = try(each.value.policy_type, "Custom")
