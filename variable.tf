@@ -1,3 +1,8 @@
+variable "base_name" {
+  type        = string
+  description = "Base Name to append to the policy name (prevents duplication)"
+}
+
 variable "policy_json" {
   type        = map(any)
   description = "Policy definition in JSON"
