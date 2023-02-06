@@ -1,7 +1,7 @@
 
 provider "azurerm" {
   features {}
-  alias = "resource_group"
+  alias = "policy"
   subscription_id = var.subscription_id
   client_id = var.client_id
   client_secret = var.client_secret
@@ -18,6 +18,7 @@ resource "azurerm_policy_definition" "main" {
   parameters          = jsonencode(each.value.properties.parameters)
   metadata            = jsonencode(each.value.properties.metadata)
   management_group_id = var.management_group_id
+    provider = azurerm.policy
 }
 
 resource "azurerm_management_group_policy_assignment" "main" {
@@ -28,4 +29,5 @@ resource "azurerm_management_group_policy_assignment" "main" {
   depends_on = [
     azurerm_policy_definition.main
   ]
+  provider = azurerm.policy
 }
