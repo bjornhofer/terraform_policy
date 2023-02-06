@@ -1,3 +1,13 @@
+
+provider "azurerm" {
+  features {}
+  alias = "resource_group"
+  subscription_id = var.subscription_id
+  client_id = var.client_id
+  client_secret = var.client_secret
+  tenant_id = var.tenant_id
+} 
+
 resource "azurerm_policy_definition" "main" {
   for_each            = { for policy in fileset("${path.module}/policies", "*.json") : policy => jsondecode(file("${path.module}/policies/${policy}")) }
   name                = "${var.base_name}_${split(".", each.key)[0]}"
